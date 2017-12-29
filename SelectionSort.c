@@ -13,20 +13,36 @@ void sort(char ** list);
 void printList(char ** list);
 
 // Driver function. 
-int main(){
-	
-	// List of 15 strings randomly selected. https://www.randomlists.com
-	// Note: This same list will be used in all of my sorts as an example. 
-	char * list[LIST_SIZE] = {"mind", "duck", "slow", "precious", "joke",
-				  "sign", "ask", "special", "silky", "ruthless",
-				  "rainy", "delirious", "scare", "van", "join"};
+// Lists built by https://www.randomlists.com
+int main(int argc, char * argv[]){
 
-	// Print list
+	// Error handling.
+	if(argc != 2){
+		fprintf(stderr, "Interface: ./SelectionSort <list_to_sort>\n");
+		return -1; 
+	}
+
+	FILE * fd;
+	if((fd = fopen(argv[1], "r")) == NULL){
+		fprintf(stderr, "Error opening file: %s\n", argv[1]);
+		return -1;
+	}
+
+	char * list[15];
+	//TODO @ME: Read file by line and add words to list. 
+
+
+
+
+
+
+
+	// Print list.
 	printf("Unsorted list\n");
 	printf("-------------\n"); 
 	printList(list);
 
-	// Sort List
+	// Sort List.
 	sort(list);
 
 	// Print list again. 
@@ -35,6 +51,7 @@ int main(){
 	printList(list);
 	printf("Comparisons: %d\n\n", numberOfComparisons);
 
+	// Completed successfully. 
 	return 0;
 }
 
