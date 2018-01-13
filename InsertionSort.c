@@ -1,45 +1,91 @@
 /* Author: Joseph Gormley - Date: 12/25/17 */
 
-#define LIST_SIZE 15
+#define MAX_WORD_LENGTH 15
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 // Number of comparisons used to sort this list. 
-int numberOfComparisons = 0;
-
+int numberOfComparisons;
+int listSize; 
 // Function declarations.
-void sort(char ** list);
-void printList(char ** list);
+void sort(char * list);
+void printList(char * list);
 
 // Driver function. 
-int main(){
-	
-	// List of 15 strings randomly selected. https://www.randomlists.com
-	// Note: This same list will be used in all of my sorts as an example. 
-	char * list[LIST_SIZE] = {"mind", "duck", "slow", "precious", "joke",
-				  "sign", "ask", "special", "silky", "ruthless",
-				  "rainy", "delirious", "scare", "van", "join"};
+// Lists built by https://www.randomlists.com/random-words
+int main(int argc, char * argv[]){
 
-	// Print list
-	printf("Unsorted list\n");
-	printf("-------------\n"); 
-	printList(list);
+	// Error handling.
+	if(argc != 2){
+		fprintf(stderr, "Interface: ./SelectionSort <list_to_sort>\n");
+		return -1; 
+	}
 
-	// Sort List
+	FILE * fd;
+	if((fd = fopen(argv[1], "r")) == NULL){
+		fprintf(stderr, "Error opening file: %s\n", argv[1]);
+		return -1;
+	}
+
+	char buffer[MAX_WORD_LENGTH + 1]; // Used to read in file.
+	if((fgets(buffer, sizeof(buffer), fd)) == NULL){
+		fprintf(stderr, "Error with file format\n");
+		return -1;
+	}
+
+	// No errors in arguements or file format at this point.
+	// Initialize globals. 
+	listSize = atoi(buffer);
+	numberOfComparisons = 0;
+
+	// Read in list of words from given file. 
+	// Note: One word per line, terminating char is appended w/ fgets.
+	int i = 0; // Used to traverse list of words. 
+	char * list = (char *)malloc(listSize * (MAX_WORD_LENGTH + 1));
+	while(fgets(buffer, sizeof(buffer), fd) != NULL){ 
+		strcpy((list + (i * MAX_WORD_LENGTH)), buffer);
+		i++;
+	}
+
+	// Print list.
+	printf("Unsorted list\n"); // For presentation. 
+	printf("-------------\n"); // For presentation. 
+	printList(list);           // For presentation. 
+	printf("\n");              // For presentation. 
+
+	// Sort List.
 	sort(list);
 
-	// Print list again. 
-	printf("Sorted list\n");
-	printf("-----------\n");
-	printList(list);
+	// Print sorted list. 
+	printf("Sorted list\n");   // For presentation. 
+	printf("-----------\n");   // For presentation. 
+	printList(list);           // For presentation. 
+	printf("\n");              // For presentation. 
 	printf("Comparisons: %d\n\n", numberOfComparisons);
 
+	// Completed successfully. 
 	return 0;
 }
 
 // This function sorts a list of strings with insertion sort. 
-void sort(char ** list){
+void sort(char * list){
+
+	// TODO @ME: 
+	// Implement insertion sort. 
+
+	return;
+}
+
+/* Prints out a given list of strings */
+void printList(char * list){
+
+	// Iterate list of strings. 
+	int i;
+	for(i = 0; i < listSize; i++){
+		printf("%s", list + (i * MAX_WORD_LENGTH));
+	}
 
 	return;
 }
