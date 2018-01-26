@@ -59,11 +59,11 @@ int main(int argc, char * argv[]){
 	sort(list);
 
 	// Print sorted list. 
-	printf("Sorted list\n");   // For presentation. 
+	printf("\nSorted list\n"); // For presentation. 
 	printf("-----------\n");   // For presentation. 
 	printList(list);           // For presentation. 
 	printf("\n");              // For presentation. 
-	printf("Comparisons: %d\n\n", numberOfComparisons);
+	printf("Comparisons: %d\n", numberOfComparisons);
 
 	// Completed successfully. 
 	return 0;
@@ -72,37 +72,37 @@ int main(int argc, char * argv[]){
 // This function sorts a list of strings with insertion sort. 
 void sort(char * list){
 
-	// Edge case.
-	//if(listSize == 1){
-	//	return;
-	//}
-
 	int maxWordSize = MAX_WORD_LENGTH;
 	// Variables below are used to swap / compare words. 
 	char * tmp = (char *)malloc(maxWordSize + 1); 
-	char * wordToCompare = NULL;
+	char * wordToSort;
+	char * wordToCompare;
 
 	// Iterate list, start at 2nd word (insertion sort).
-	char * wordToSort; 
-	for(wordToSort = list + (1 * maxWordSize); wordToSort <= list + ((listSize - 1) * maxWordSize); wordToSort += maxWordSize){
-
+	char * startUnsortedList;
+	for(startUnsortedList = list + (1 * maxWordSize); startUnsortedList <= list + ((listSize - 1) * maxWordSize); startUnsortedList += maxWordSize){
 		// Compare the word to sort with the word before it.
-		// Continue untill at start of list / word is in rightful place.  
-		for(wordToCompare = wordToSort - maxWordSize; wordToCompare >= list; wordToCompare -= maxWordSize){
-
+		// Continue until word is sorted.  
+		wordToSort = startUnsortedList;
+		wordToCompare = wordToSort - maxWordSize;
+		while(wordToCompare >= list){
+			numberOfComparisons++;
 			if(strcmp(wordToSort, wordToCompare) < 0){
-			 	strcpy(tmp, wordToCompare);
-			 	strcpy(wordToSort, wordToCompare);
-			 	strcpy(wordToCompare, tmp);
+				strcpy(tmp, wordToCompare);
+			 	strcpy(wordToCompare, wordToSort);
+			 	strcpy(wordToSort, tmp);
+			 	// wordToSort was swapped left, so must move pointers left. 
+			 	wordToSort -= maxWordSize; 
+			 	wordToCompare -= maxWordSize;
+			}else{
+				// wordToSort is sorted. 
+				break;
 			}
-
 		}
-
-
 	}
 
-
-
+	// Free allocated memory
+	free(tmp);
 	return;
 }
 

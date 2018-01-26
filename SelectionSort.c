@@ -59,11 +59,11 @@ int main(int argc, char * argv[]){
 	sort(list);
 
 	// Print sorted list. 
-	printf("Sorted list\n");   // For presentation. 
+	printf("\nSorted list\n"); // For presentation. 
 	printf("-----------\n");   // For presentation. 
 	printList(list);           // For presentation. 
 	printf("\n");              // For presentation. 
-	printf("Comparisons: %d\n\n", numberOfComparisons);
+	printf("Comparisons: %d\n", numberOfComparisons);
 
 	// Completed successfully. 
 	return 0;
@@ -73,12 +73,12 @@ int main(int argc, char * argv[]){
 void sort(char * list){
 
 	int maxWordSize = MAX_WORD_LENGTH; 
-	// Variables below are used to swap words. 
+	// Variables below are used to swap / compare words. 
 	int indexToSwap = -1; 
 	char * tmp = (char *)malloc(maxWordSize + 1); 
 	char * wordToSwap = NULL;
 
-	// Index of the word sorted word. 
+	// Index of the word to be sorted. 
 	int properIndex;
 	for(properIndex = 0; properIndex  < listSize; properIndex++){		
 		wordToSwap = list + (properIndex * maxWordSize);
@@ -92,7 +92,6 @@ void sort(char * list){
 				indexToSwap = i; 
 			} 
 		}
-
 		// If addresses overlap, behavior is undefined. Here's how we avoid that. 
 		if(strcmp(list + (properIndex * maxWordSize), wordToSwap) != 0){
 			// Swap words. 
@@ -102,6 +101,8 @@ void sort(char * list){
 		}
 	}
 
+	// Free allocated memory
+	free(tmp);
 	return;
 }
 
