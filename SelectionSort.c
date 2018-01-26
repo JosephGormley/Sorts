@@ -78,7 +78,7 @@ void sort(char * list){
 	char * tmp = (char *)malloc(maxWordSize + 1); 
 	char * wordToSwap = NULL;
 
-	// Index of the nth word sorted word. 
+	// Index of the word sorted word. 
 	int properIndex;
 	for(properIndex = 0; properIndex  < listSize; properIndex++){		
 		wordToSwap = list + (properIndex * maxWordSize);

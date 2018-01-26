@@ -72,8 +72,36 @@ int main(int argc, char * argv[]){
 // This function sorts a list of strings with insertion sort. 
 void sort(char * list){
 
-	// TODO @ME: 
-	// Implement insertion sort. 
+	// Edge case.
+	//if(listSize == 1){
+	//	return;
+	//}
+
+	int maxWordSize = MAX_WORD_LENGTH;
+	// Variables below are used to swap / compare words. 
+	char * tmp = (char *)malloc(maxWordSize + 1); 
+	char * wordToCompare = NULL;
+
+	// Iterate list, start at 2nd word (insertion sort).
+	char * wordToSort; 
+	for(wordToSort = list + (1 * maxWordSize); wordToSort <= list + ((listSize - 1) * maxWordSize); wordToSort += maxWordSize){
+
+		// Compare the word to sort with the word before it.
+		// Continue untill at start of list / word is in rightful place.  
+		for(wordToCompare = wordToSort - maxWordSize; wordToCompare >= list; wordToCompare -= maxWordSize){
+
+			if(strcmp(wordToSort, wordToCompare) < 0){
+			 	strcpy(tmp, wordToCompare);
+			 	strcpy(wordToSort, wordToCompare);
+			 	strcpy(wordToCompare, tmp);
+			}
+
+		}
+
+
+	}
+
+
 
 	return;
 }
