@@ -10,7 +10,7 @@
 int numberOfComparisons;
 int listSize; 
 // Function declarations.
-void sort(char * list);
+void sort(char * list, int left, int right);
 void printList(char * list);
 
 // Driver function. 
@@ -56,7 +56,7 @@ int main(int argc, char * argv[]){
 	printf("\n");              // For presentation. 
 
 	// Sort List.
-	sort(list);
+	sort(list, 0, 8);
 
 	// Print sorted list. 
 	printf("\nSorted list\n"); // For presentation. 
@@ -69,10 +69,25 @@ int main(int argc, char * argv[]){
 	return 0;
 }
 
-// This function sorts a list of strings with insertion sort. 
-void sort(char * list){
+// This function sorts a list of strings with mergesort. 
+void sort(char * list, int left, int right){
 
-	// TODO @ME: Implement mergesort. 
+	// Base Case
+	if(left >= right){
+		return;
+	}
+
+
+	int middle = (left + right)/2;
+
+	// Break list 
+	sort(list, left, middle);
+	sort(list, middle + 1, right);
+
+	// Build list
+	// TODO@ ME
+
+
 	
 	return;
 }
