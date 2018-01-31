@@ -1,5 +1,6 @@
 /* Author: Joseph Gormley - Date: 01/26/17 */
 
+// Including null byte. 
 #define MAX_WORD_LENGTH 15
 
 #include <stdio.h>
@@ -56,7 +57,7 @@ int main(int argc, char * argv[]){
 	printf("\n");              // For presentation. 
 
 	// Sort List.
-	sort(list, 0, 8);
+	sort(list, 0, listSize - 1);
 
 	// Print sorted list. 
 	printf("\nSorted list\n"); // For presentation. 
@@ -77,18 +78,54 @@ void sort(char * list, int left, int right){
 		return;
 	}
 
-
+	int maxWordSize = MAX_WORD_LENGTH;
 	int middle = (left + right)/2;
 
-	// Break list 
+	// Break list down. 
 	sort(list, left, middle);
 	sort(list, middle + 1, right);
 
+	// Create temp arrays to store both sides.
+	// MergeSort is NOT an in-place sort. 
+	int i;
+	char * leftList = (char *)malloc((middle - left + 1) * (maxWordSize +1));
+	char * rightList = (char *)malloc((right - middle) * (maxWordSize +1));
+	// Copy left list.
+	printf("%d %d\n", left, right);
+	for(i = 0; i < middle - left + 1; i++){
+		strcpy(leftList + (i * maxWordSize), list + ((left + i) * maxWordSize));
+		printf("%s", leftList + (i * maxWordSize));
+	}
+	printf("\n");
+	// Copy right list. 
+	for(i = 0; i < right - middle; i++){
+		strcpy(rightList + (i * maxWordSize), list + ((middle + 1 + i) * maxWordSize));
+		printf("%s", rightList + (i * maxWordSize));
+	}
+
+	printf("\n\n\n\n");
+
+
+
+
 	// Build list
-	// TODO@ ME
+	while(left <= middle){
+		if(strcmp(list + (left * maxWordSize), list + ((middle + 1) * maxWordSize)) > 0){
+			// Swap strings
 
 
-	
+
+
+			left++;
+		}else{
+			// Strings are in correct place
+			left++;
+		}
+	}
+
+	free(leftList);
+	free(rightList);
+
 	return;
 }
 
