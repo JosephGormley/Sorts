@@ -79,47 +79,57 @@ void sort(char * list, int left, int right){
 	}
 
 	int maxWordSize = MAX_WORD_LENGTH;
-	int middle = (left + right)/2;
+
+	// Index book keeping. 
+	int m, i, j, k;
+	m = (left + right)/2;
 
 	// Break list down. 
-	sort(list, left, middle);
-	sort(list, middle + 1, right);
+	sort(list, left, m);
+	sort(list, m + 1, right);
 
 	// Create temp arrays to store both sides.
 	// MergeSort is NOT an in-place sort. 
-	int i;
-	char * leftList = (char *)malloc((middle - left + 1) * (maxWordSize +1));
-	char * rightList = (char *)malloc((right - middle) * (maxWordSize +1));
+	char * leftList = (char *)malloc((m - left + 1) * (maxWordSize +1));
+	char * rightList = (char *)malloc((right - m) * (maxWordSize +1));
 	// Copy left list.
-	//printf("%d %d\n", left, right);
-	for(i = 0; i < middle - left + 1; i++){
-		//strcpy(leftList + (i * maxWordSize), list + ((left + i) * maxWordSize));
-		printf("%s", leftList + (i * maxWordSize));
+	for(i = 0; i < m - left + 1; i++){
+		strcpy(leftList + (i * maxWordSize), list + ((left + i) * maxWordSize));
 	}
-	//printf("\n");
 	// Copy right list. 
-	for(i = 0; i < right - middle; i++){
-		strcpy(rightList + (i * maxWordSize), list + ((middle + 1 + i) * maxWordSize));
-		//printf("%s", rightList + (i * maxWordSize));
+	for(j = 0; i < right - m; i++){
+		strcpy(rightList + (i * maxWordSize), list + ((m + 1 + i) * maxWordSize));
 	}
 
-	//printf("\n\n\n\n");
-
-
-
-	// Rebuild list
-	while(){
-		if(strcmp(list + (left * maxWordSize), list + ((middle + 1) * maxWordSize)) > 0){
-			// Swap strings
-
-
-
-
-			left++;
+	// Rebuild list from leftList & rightList.
+	i = 0; // Left list
+	j = 0; // Right list
+	k = left; // Merged list
+	while(i < m - left + 1 && j < right - m){
+		if(strcmp(leftList + (i * maxWordSize), rightList + (j * maxWordSize)) > 0){
+			// Copy latter string to merged list.
+			strcpy(list + (k * maxWordSize), rightList + (j * maxWordSize));
+			j++;
 		}else{
-			// Strings are in correct place
-			left++;
+			// Copy former string to merged list. 
+			strcpy(list + (k * maxWordSize), leftList + (i * maxWordSize));
+			i++;
 		}
+		k++;
+	}
+
+	// Copy remaining strings from right list (if any).
+	while(j < right - m){
+		strcpy(list + (k * maxWordSize), rightList + (j * maxWordSize));
+		j++;
+		k++;
+	}
+
+	// Copy remaining strings from left list (if any).
+	while(i < m - left + 1){
+		strcpy(list + (k * maxWordSize), leftList + (i * maxWordSize));
+		i++;
+		k++;
 	}
 
 	free(leftList);
