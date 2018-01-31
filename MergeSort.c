@@ -91,25 +91,24 @@ void sort(char * list, int left, int right){
 	char * leftList = (char *)malloc((middle - left + 1) * (maxWordSize +1));
 	char * rightList = (char *)malloc((right - middle) * (maxWordSize +1));
 	// Copy left list.
-	printf("%d %d\n", left, right);
+	//printf("%d %d\n", left, right);
 	for(i = 0; i < middle - left + 1; i++){
-		strcpy(leftList + (i * maxWordSize), list + ((left + i) * maxWordSize));
+		//strcpy(leftList + (i * maxWordSize), list + ((left + i) * maxWordSize));
 		printf("%s", leftList + (i * maxWordSize));
 	}
-	printf("\n");
+	//printf("\n");
 	// Copy right list. 
 	for(i = 0; i < right - middle; i++){
 		strcpy(rightList + (i * maxWordSize), list + ((middle + 1 + i) * maxWordSize));
-		printf("%s", rightList + (i * maxWordSize));
+		//printf("%s", rightList + (i * maxWordSize));
 	}
 
-	printf("\n\n\n\n");
+	//printf("\n\n\n\n");
 
 
 
-
-	// Build list
-	while(left <= middle){
+	// Rebuild list
+	while(){
 		if(strcmp(list + (left * maxWordSize), list + ((middle + 1) * maxWordSize)) > 0){
 			// Swap strings
 
